@@ -35,7 +35,6 @@
     display: flex; align-items: center; justify-content: center;
     margin-bottom: 28px;
   }
-  /* expanding pulse rings */
   .splash-ring::before,
   .splash-ring::after {
     content: '';
@@ -61,9 +60,8 @@
   }
   @keyframes splashPulse {
     0%,100% { box-shadow: 0 0 20px rgba(245,194,0,.4); }
-    50%      { box-shadow: 0 0 60px rgba(245,194,0,1),  0 0 100px rgba(245,194,0,.3); }
+    50%      { box-shadow: 0 0 60px rgba(245,194,0,1), 0 0 100px rgba(245,194,0,.3); }
   }
-  /* logo.png inside splash circle */
   .splash-logo-wrap img {
     width: 80px; height: 80px;
     object-fit: contain;
@@ -86,12 +84,12 @@
   .splash-dot:nth-child(2) { animation-delay: .2s; }
   .splash-dot:nth-child(3) { animation-delay: .4s; }
   @keyframes dotBounce {
-    0%,80%,100% { transform: translateY(0);    opacity: .4; }
-    40%          { transform: translateY(-10px); opacity: 1;  }
+    0%,80%,100% { transform: translateY(0);     opacity: .4; }
+    40%          { transform: translateY(-10px);  opacity: 1;  }
   }
 
   /* ══════════════════════════════
-     CARDS — common structure
+     CARDS
   ══════════════════════════════ */
   .card {
     display: none;
@@ -111,26 +109,26 @@
     to   { opacity: 1; transform: scale(1);    }
   }
 
-  /* Full-screen souvenir image */
+  /* Full-screen background image */
   .card-bg {
     position: absolute; inset: 0;
     width: 100%; height: 100%;
-    object-fit: cover;        /* fills the entire screen */
+    object-fit: cover;
     object-position: center;
     z-index: 1;
+    /* guarantee visibility — never hidden by default */
+    display: block;
   }
 
-  /* Thin vignette on top of image so logo/footer stay readable */
   .card-vignette {
     position: absolute; inset: 0;
     background:
-      linear-gradient(to bottom, rgba(0,0,0,.45) 0%, transparent 22%),
-      linear-gradient(to top,    rgba(0,0,0,.35) 0%, transparent 18%);
+      linear-gradient(to bottom, rgba(0,0,0,.5) 0%, transparent 25%),
+      linear-gradient(to top,    rgba(0,0,0,.4) 0%, transparent 20%);
     z-index: 2;
     pointer-events: none;
   }
 
-  /* ── Particle canvas overlay (per-card animations) ── */
   .particle-canvas {
     position: absolute; inset: 0;
     width: 100%; height: 100%;
@@ -139,7 +137,7 @@
   }
 
   /* ══════════════════════════════
-     LOGO BADGE  (top-center)
+     LOGO BADGE
   ══════════════════════════════ */
   .logo-badge {
     position: absolute;
@@ -161,7 +159,6 @@
     border: 3px solid var(--gold);
     display: flex; align-items: center; justify-content: center;
     overflow: hidden;
-    /* gentle ping */
     animation: logoPing 3s 1.5s ease-in-out infinite;
     backdrop-filter: blur(4px);
     -webkit-backdrop-filter: blur(4px);
@@ -170,8 +167,6 @@
     0%,100% { box-shadow: 0 0 0  0  rgba(245,194,0,.55); }
     50%      { box-shadow: 0 0 0 14px rgba(245,194,0,0);  }
   }
-
-  /* logo.png inside the badge circle */
   .logo-circle img {
     width: 50px; height: 50px;
     object-fit: contain;
@@ -187,7 +182,7 @@
   }
 
   /* ══════════════════════════════
-     FOOTER  (bottom)
+     FOOTER
   ══════════════════════════════ */
   .card-footer {
     position: absolute;
@@ -200,29 +195,16 @@
     text-shadow: 0 1px 4px rgba(0,0,0,.9);
     animation: footerFade 1s 1.2s both;
   }
-  @keyframes footerFade {
-    from { opacity: 0; }
-    to   { opacity: 1; }
-  }
+  @keyframes footerFade { from { opacity: 0; } to { opacity: 1; } }
 </style>
 </head>
 <body>
 
-<!-- ══════════════════════════════
-     SPLASH SCREEN
-══════════════════════════════ -->
+<!-- SPLASH -->
 <div id="splash">
   <div class="splash-ring">
     <div class="splash-logo-wrap">
-      <!--
-        ╔══════════════════════════════════════╗
-        ║  LOGO DA ESCOLA                      ║
-        ║  Arquivo: logo.png                   ║
-        ║  Coloque logo.png na mesma pasta     ║
-        ║  deste arquivo HTML no repositório   ║
-        ╚══════════════════════════════════════╝
-      -->
-      <img src="logo.png" alt="CTOP Logo">
+      <img src="logo.png" alt="CTOP Logo" id="splashLogo">
     </div>
   </div>
   <p class="splash-tagline">CTOP · FEIRA DE INFORMÁTICA</p>
@@ -233,351 +215,305 @@
   </div>
 </div>
 
-<!-- ══════════════════════════════
-     CARD 1
-══════════════════════════════ -->
+<!-- CARD 1 — imagem1.png -->
 <div id="card1" class="card">
-  <!--
-    ╔══════════════════════════════════════╗
-    ║  IMAGEM DA LEMBRANCINHA 1            ║
-    ║  Arquivo: imagem1.png                ║
-    ║  Formato recomendado: 9:16 (retrato) ║
-    ╚══════════════════════════════════════╝
-  -->
-  <img class="card-bg" src="imagem1.png" alt="Lembrancinha 1">
+  <img class="card-bg" id="bg1" src="imagem1.png" alt="Lembrancinha 1">
   <div class="card-vignette"></div>
   <canvas class="particle-canvas" id="canvas1"></canvas>
-
   <div class="logo-badge">
-    <div class="logo-circle">
-      <img src="logo.png" alt="CTOP">
-    </div>
+    <div class="logo-circle"><img src="logo.png" alt="CTOP"></div>
     <span class="logo-label">ESCOLA DE PROFISSÕES</span>
   </div>
-
   <div class="card-footer">CTOP · FEIRA DE INFORMÁTICA 2026</div>
 </div>
 
-<!-- ══════════════════════════════
-     CARD 2
-══════════════════════════════ -->
+<!-- CARD 2 — imagem2.png -->
 <div id="card2" class="card">
-  <!--
-    ╔══════════════════════════════════════╗
-    ║  IMAGEM DA LEMBRANCINHA 2            ║
-    ║  Arquivo: imagem2.png                ║
-    ╚══════════════════════════════════════╝
-  -->
-  <img class="card-bg" src="imagem2.png" alt="Lembrancinha 2">
+  <img class="card-bg" id="bg2" src="imagem2.png" alt="Lembrancinha 2">
   <div class="card-vignette"></div>
   <canvas class="particle-canvas" id="canvas2"></canvas>
-
   <div class="logo-badge">
-    <div class="logo-circle">
-      <img src="logo.png" alt="CTOP">
-    </div>
+    <div class="logo-circle"><img src="logo.png" alt="CTOP"></div>
     <span class="logo-label">ESCOLA DE PROFISSÕES</span>
   </div>
-
   <div class="card-footer">CTOP · FEIRA DE INFORMÁTICA 2026</div>
 </div>
 
-<!-- ══════════════════════════════
-     CARD 3
-══════════════════════════════ -->
+<!-- CARD 3 — imagem3.png -->
 <div id="card3" class="card">
-  <!--
-    ╔══════════════════════════════════════╗
-    ║  IMAGEM DA LEMBRANCINHA 3            ║
-    ║  Arquivo: imagem3.png                ║
-    ╚══════════════════════════════════════╝
-  -->
-  <img class="card-bg" src="imagem3.png" alt="Lembrancinha 3">
+  <img class="card-bg" id="bg3" src="imagem3.png" alt="Lembrancinha 3">
   <div class="card-vignette"></div>
   <canvas class="particle-canvas" id="canvas3"></canvas>
-
   <div class="logo-badge">
-    <div class="logo-circle">
-      <img src="logo.png" alt="CTOP">
-    </div>
+    <div class="logo-circle"><img src="logo.png" alt="CTOP"></div>
     <span class="logo-label">ESCOLA DE PROFISSÕES</span>
   </div>
-
   <div class="card-footer">CTOP · FEIRA DE INFORMÁTICA 2026</div>
 </div>
 
-<!-- ══════════════════════════════
-     CARD 4
-══════════════════════════════ -->
+<!-- CARD 4 — imagem4.png -->
 <div id="card4" class="card">
-  <!--
-    ╔══════════════════════════════════════╗
-    ║  IMAGEM DA LEMBRANCINHA 4            ║
-    ║  Arquivo: imagem4.png                ║
-    ╚══════════════════════════════════════╝
-  -->
-  <img class="card-bg" src="imagem4.png" alt="Lembrancinha 4">
+  <img class="card-bg" id="bg4" src="imagem4.png" alt="Lembrancinha 4">
   <div class="card-vignette"></div>
   <canvas class="particle-canvas" id="canvas4"></canvas>
-
   <div class="logo-badge">
-    <div class="logo-circle">
-      <img src="logo.png" alt="CTOP">
-    </div>
+    <div class="logo-circle"><img src="logo.png" alt="CTOP"></div>
     <span class="logo-label">ESCOLA DE PROFISSÕES</span>
   </div>
-
   <div class="card-footer">CTOP · FEIRA DE INFORMÁTICA 2026</div>
 </div>
 
-<!-- ══════════════════════════════
-     CARD 5
-══════════════════════════════ -->
+<!-- CARD 5 — imagem5.png -->
 <div id="card5" class="card">
-  <!--
-    ╔══════════════════════════════════════╗
-    ║  IMAGEM DA LEMBRANCINHA 5            ║
-    ║  Arquivo: imagem5.png                ║
-    ╚══════════════════════════════════════╝
-  -->
-  <img class="card-bg" src="imagem5.png" alt="Lembrancinha 5">
+  <img class="card-bg" id="bg5" src="imagem5.png" alt="Lembrancinha 5">
   <div class="card-vignette"></div>
   <canvas class="particle-canvas" id="canvas5"></canvas>
-
   <div class="logo-badge">
-    <div class="logo-circle">
-      <img src="logo.png" alt="CTOP">
-    </div>
+    <div class="logo-circle"><img src="logo.png" alt="CTOP"></div>
     <span class="logo-label">ESCOLA DE PROFISSÕES</span>
   </div>
-
   <div class="card-footer">CTOP · FEIRA DE INFORMÁTICA 2026</div>
 </div>
 
 <script>
-/* ══════════════════════════════════════════════════
-   RANDOM CARD SELECTION + SPLASH
-══════════════════════════════════════════════════ */
-const CARDS = ['card1', 'card2', 'card3', 'card4', 'card5'];
-const CHOSEN = CARDS[Math.floor(Math.random() * CARDS.length)];
-const chosenIndex = parseInt(CHOSEN.replace('card', ''));
+/* ══════════════════════════════════════════════════════════
+   1. RANDOM SELECTION — truly non-repeating
+   ──────────────────────────────────────────────────────────
+   Uses sessionStorage to remember the last card shown.
+   On each visit, shuffles the remaining 4 cards so the same
+   image is NEVER shown twice in a row.
+   Also seeds from crypto.getRandomValues when available
+   for a higher-quality random source.
+══════════════════════════════════════════════════════════ */
 
-document.getElementById(CHOSEN).classList.add('active');
-setTimeout(() => document.getElementById('splash').classList.add('hidden'), 2200);
+function secureRandInt(max) {
+  if (window.crypto && window.crypto.getRandomValues) {
+    const arr = new Uint32Array(1);
+    window.crypto.getRandomValues(arr);
+    return arr[0] % max;
+  }
+  return Math.floor(Math.random() * max);
+}
 
-/* ══════════════════════════════════════════════════
-   PARTICLE ANIMATIONS — one per card theme
-══════════════════════════════════════════════════ */
+function pickCard() {
+  const ALL = [1, 2, 3, 4, 5];
+  const lastRaw = sessionStorage.getItem('ctop_last_card');
+  const last = lastRaw ? parseInt(lastRaw) : null;
 
-/* ── Helpers ── */
+  // Build pool: exclude the last shown card to prevent immediate repeat
+  const pool = last !== null ? ALL.filter(n => n !== last) : ALL;
+
+  // Pick from pool using secure random
+  const chosen = pool[secureRandInt(pool.length)];
+  sessionStorage.setItem('ctop_last_card', String(chosen));
+  return chosen;
+}
+
+const CHOSEN_INDEX = pickCard();
+const CHOSEN_ID    = 'card' + CHOSEN_INDEX;
+
+/* ══════════════════════════════════════════════════════════
+   2. IMAGE PRELOADING — show card only after image is ready
+   ──────────────────────────────────────────────────────────
+   Preloads ALL 5 images in background. When the chosen
+   image finishes loading (or fails), activates its card
+   and hides splash. This prevents blank screens.
+══════════════════════════════════════════════════════════ */
+
+const IMAGE_FILES = ['imagem1.png','imagem2.png','imagem3.png','imagem4.png','imagem5.png'];
+let chosenLoaded  = false;
+let splashMinDone = false;   // 2.2 s minimum splash time
+
+function tryReveal() {
+  if (chosenLoaded && splashMinDone) {
+    document.getElementById(CHOSEN_ID).classList.add('active');
+    document.getElementById('splash').classList.add('hidden');
+    startParticles(CHOSEN_INDEX);
+  }
+}
+
+// Minimum splash time (2.2 s) — keeps UX smooth
+setTimeout(() => { splashMinDone = true; tryReveal(); }, 2200);
+
+// Preload all images; flag when the chosen one is ready
+IMAGE_FILES.forEach((file, i) => {
+  const img = new Image();
+  img.onload = img.onerror = () => {
+    if (i + 1 === CHOSEN_INDEX) {
+      // Update the actual <img> src to already-cached version
+      const bgEl = document.getElementById('bg' + CHOSEN_INDEX);
+      if (bgEl) bgEl.src = file;
+      chosenLoaded = true;
+      tryReveal();
+    }
+  };
+  img.src = file;
+});
+
+/* ══════════════════════════════════════════════════════════
+   3. PARTICLE ANIMATIONS
+══════════════════════════════════════════════════════════ */
+
 function rand(min, max) { return Math.random() * (max - min) + min; }
 
 function setupCanvas(id) {
   const cv = document.getElementById(id);
   if (!cv) return null;
   const ctx = cv.getContext('2d');
-  function resize() {
-    cv.width  = window.innerWidth;
-    cv.height = window.innerHeight;
-  }
+  function resize() { cv.width = window.innerWidth; cv.height = window.innerHeight; }
   resize();
   window.addEventListener('resize', resize);
   return { cv, ctx };
 }
 
-/* ────────────────────────────────
-   CARD 1 — golden floating sparks
-──────────────────────────────── */
-if (chosenIndex === 1) {
-  const { cv, ctx } = setupCanvas('canvas1');
-  const sparks = Array.from({ length: 55 }, () => ({
-    x: rand(0, cv.width), y: rand(0, cv.height),
-    vx: rand(-0.4, 0.4),  vy: rand(-0.8, -0.2),
-    r: rand(1.5, 4),
-    op: rand(0.4, 1),
-    fade: rand(0.004, 0.012),
-  }));
+function startParticles(index) {
 
-  function resetSpark(s) {
-    s.x = rand(0, cv.width);
-    s.y = cv.height + 10;
-    s.vx = rand(-0.4, 0.4);
-    s.vy = rand(-0.8, -0.2);
-    s.r  = rand(1.5, 4);
-    s.op = rand(0.5, 1);
-    s.fade = rand(0.004, 0.012);
+  /* ── Card 1: golden floating sparks ── */
+  if (index === 1) {
+    const { cv, ctx } = setupCanvas('canvas1');
+    const sparks = Array.from({ length: 55 }, () => ({
+      x: rand(0, cv.width), y: rand(0, cv.height),
+      vx: rand(-0.4, 0.4),  vy: rand(-0.8, -0.2),
+      r: rand(1.5, 4), op: rand(0.4, 1), fade: rand(0.004, 0.012),
+    }));
+    function resetSpark(s) {
+      s.x = rand(0, cv.width); s.y = cv.height + 10;
+      s.vx = rand(-0.4, 0.4); s.vy = rand(-0.8, -0.2);
+      s.r = rand(1.5, 4); s.op = rand(0.5, 1); s.fade = rand(0.004, 0.012);
+    }
+    (function draw() {
+      ctx.clearRect(0, 0, cv.width, cv.height);
+      sparks.forEach(s => {
+        ctx.beginPath(); ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(245,194,0,${s.op})`; ctx.fill();
+        s.x += s.vx; s.y += s.vy; s.op -= s.fade;
+        if (s.op <= 0 || s.y < -10) resetSpark(s);
+      });
+      requestAnimationFrame(draw);
+    })();
   }
 
-  (function draw() {
-    ctx.clearRect(0, 0, cv.width, cv.height);
-    sparks.forEach(s => {
-      ctx.beginPath();
-      ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
-      ctx.fillStyle = `rgba(245,194,0,${s.op})`;
-      ctx.fill();
-      s.x += s.vx; s.y += s.vy; s.op -= s.fade;
-      if (s.op <= 0 || s.y < -10) resetSpark(s);
+  /* ── Card 2: matrix column rain ── */
+  if (index === 2) {
+    const { cv, ctx } = setupCanvas('canvas2');
+    const FS = 13;
+    let cols = Math.floor(cv.width / FS);
+    let drops = Array(cols).fill(1);
+    const CHARS = 'ABCDEF0123456789アイウエカキクコ<>{}[]#@!$%^&*';
+    window.addEventListener('resize', () => {
+      cols = Math.floor(cv.width / FS); drops = Array(cols).fill(1);
     });
-    requestAnimationFrame(draw);
-  })();
-}
-
-/* ────────────────────────────────
-   CARD 2 — matrix column rain
-──────────────────────────────── */
-if (chosenIndex === 2) {
-  const { cv, ctx } = setupCanvas('canvas2');
-  const FS = 13;
-  let cols = Math.floor(cv.width / FS);
-  let drops = Array(cols).fill(1);
-  const CHARS = 'ABCDEF0123456789アイウエカキクコ<>{}[]#@!$%^&*';
-
-  window.addEventListener('resize', () => {
-    cols  = Math.floor(cv.width / FS);
-    drops = Array(cols).fill(1);
-  });
-
-  setInterval(() => {
-    ctx.fillStyle = 'rgba(4,4,12,.07)';
-    ctx.fillRect(0, 0, cv.width, cv.height);
-    for (let i = 0; i < drops.length; i++) {
-      const ch = CHARS[Math.floor(Math.random() * CHARS.length)];
-      const bright = Math.floor(120 + Math.random() * 80);
-      ctx.fillStyle = `rgba(245,${bright},0,${0.4 + Math.random() * 0.5})`;
-      ctx.font = FS + 'px Share Tech Mono, monospace';
-      ctx.fillText(ch, i * FS, drops[i] * FS);
-      if (drops[i] * FS > cv.height && Math.random() > .965) drops[i] = 0;
-      drops[i]++;
-    }
-  }, 50);
-}
-
-/* ────────────────────────────────
-   CARD 3 — expanding golden rings
-──────────────────────────────── */
-if (chosenIndex === 3) {
-  const { cv, ctx } = setupCanvas('canvas3');
-  const rings = [
-    { delay: 0,    phase: 0   },
-    { delay: 800,  phase: 0   },
-    { delay: 1600, phase: 0   },
-  ];
-  const CX = () => cv.width  / 2;
-  const CY = () => cv.height * 0.42;
-
-  rings.forEach((r, i) => setTimeout(() => {
-    r.active = true; r.rad = 20; r.op = 0.9;
-  }, r.delay));
-
-  (function draw() {
-    ctx.clearRect(0, 0, cv.width, cv.height);
-    rings.forEach(r => {
-      if (!r.active) return;
-      ctx.beginPath();
-      ctx.arc(CX(), CY(), r.rad, 0, Math.PI * 2);
-      ctx.strokeStyle = `rgba(245,194,0,${r.op})`;
-      ctx.lineWidth = 1.5;
-      ctx.stroke();
-      r.rad += 2.8; r.op -= 0.012;
-      if (r.op <= 0) { r.rad = 20; r.op = 0.9; }
-    });
-    requestAnimationFrame(draw);
-  })();
-}
-
-/* ────────────────────────────────
-   CARD 4 — falling golden leaves
-──────────────────────────────── */
-if (chosenIndex === 4) {
-  const { cv, ctx } = setupCanvas('canvas4');
-  const leaves = Array.from({ length: 30 }, () => ({
-    x:     rand(0, cv.width),
-    y:     rand(-200, cv.height),
-    size:  rand(5, 14),
-    rot:   rand(0, Math.PI * 2),
-    rotV:  rand(-0.03, 0.03),
-    vy:    rand(0.6, 1.8),
-    vx:    rand(-0.5, 0.5),
-    op:    rand(0.3, 0.7),
-    swing: rand(0.01, 0.04),
-    swingT: rand(0, Math.PI * 2),
-  }));
-
-  function resetLeaf(l) {
-    l.x = rand(0, cv.width); l.y = -20;
-    l.size = rand(5, 14); l.op = rand(0.3, 0.7);
+    setInterval(() => {
+      ctx.fillStyle = 'rgba(4,4,12,.07)';
+      ctx.fillRect(0, 0, cv.width, cv.height);
+      for (let i = 0; i < drops.length; i++) {
+        const ch = CHARS[Math.floor(Math.random() * CHARS.length)];
+        ctx.fillStyle = `rgba(245,${Math.floor(120+Math.random()*80)},0,${0.4+Math.random()*0.5})`;
+        ctx.font = FS + 'px Share Tech Mono, monospace';
+        ctx.fillText(ch, i * FS, drops[i] * FS);
+        if (drops[i] * FS > cv.height && Math.random() > .965) drops[i] = 0;
+        drops[i]++;
+      }
+    }, 50);
   }
 
-  (function draw() {
-    ctx.clearRect(0, 0, cv.width, cv.height);
-    leaves.forEach(l => {
-      l.swingT += l.swing;
-      l.x += l.vx + Math.sin(l.swingT) * 0.8;
-      l.y += l.vy; l.rot += l.rotV;
-      ctx.save();
-      ctx.translate(l.x, l.y);
-      ctx.rotate(l.rot);
-      ctx.beginPath();
-      ctx.ellipse(0, 0, l.size * 0.4, l.size, 0, 0, Math.PI * 2);
-      ctx.fillStyle = `rgba(245,194,0,${l.op})`;
-      ctx.fill();
-      ctx.restore();
-      if (l.y > cv.height + 20) resetLeaf(l);
-    });
-    requestAnimationFrame(draw);
-  })();
-}
+  /* ── Card 3: expanding golden rings ── */
+  if (index === 3) {
+    const { cv, ctx } = setupCanvas('canvas3');
+    const rings = [
+      { active: false, rad: 20, op: 0.9 },
+      { active: false, rad: 20, op: 0.9 },
+      { active: false, rad: 20, op: 0.9 },
+    ];
+    const CX = () => cv.width / 2;
+    const CY = () => cv.height * 0.42;
+    rings.forEach((r, i) => setTimeout(() => { r.active = true; }, i * 800));
+    (function draw() {
+      ctx.clearRect(0, 0, cv.width, cv.height);
+      rings.forEach(r => {
+        if (!r.active) return;
+        ctx.beginPath(); ctx.arc(CX(), CY(), r.rad, 0, Math.PI * 2);
+        ctx.strokeStyle = `rgba(245,194,0,${r.op})`;
+        ctx.lineWidth = 1.5; ctx.stroke();
+        r.rad += 2.8; r.op -= 0.012;
+        if (r.op <= 0) { r.rad = 20; r.op = 0.9; }
+      });
+      requestAnimationFrame(draw);
+    })();
+  }
 
-/* ────────────────────────────────
-   CARD 5 — meteors + star field
-──────────────────────────────── */
-if (chosenIndex === 5) {
-  const { cv, ctx } = setupCanvas('canvas5');
-  const stars = Array.from({ length: 160 }, () => ({
-    x: rand(0, cv.width), y: rand(0, cv.height),
-    r: rand(.3, 2.2), op: rand(.1, 1),
-    spd: rand(.03, .15),
-  }));
-  const meteors = [];
-
-  setInterval(() => {
-    meteors.push({
-      x: rand(0, cv.width), y: rand(0, cv.height * .3),
-      len: rand(80, 160), speed: rand(7, 14),
-      angle: Math.PI / 4 + rand(-.3, .3),
-      op: 1, w: rand(.8, 2.5),
-    });
-  }, 750);
-
-  (function draw() {
-    ctx.clearRect(0, 0, cv.width, cv.height);
-    // stars
-    stars.forEach(s => {
-      s.op = Math.max(.05, Math.min(1, s.op + s.spd * (Math.random() > .5 ? 1 : -1)));
-      ctx.beginPath();
-      ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
-      ctx.fillStyle = `rgba(255,255,255,${s.op})`;
-      ctx.fill();
-    });
-    // meteors
-    for (let i = meteors.length - 1; i >= 0; i--) {
-      const m = meteors[i];
-      const x2 = m.x - Math.cos(m.angle) * m.len;
-      const y2 = m.y - Math.sin(m.angle) * m.len;
-      const g = ctx.createLinearGradient(m.x, m.y, x2, y2);
-      g.addColorStop(0,   `rgba(245,194,0,${m.op})`);
-      g.addColorStop(.35, `rgba(255,220,80,${m.op * .5})`);
-      g.addColorStop(1,   'rgba(245,194,0,0)');
-      ctx.beginPath();
-      ctx.moveTo(m.x, m.y); ctx.lineTo(x2, y2);
-      ctx.strokeStyle = g; ctx.lineWidth = m.w; ctx.stroke();
-      m.x += Math.cos(m.angle) * m.speed;
-      m.y += Math.sin(m.angle) * m.speed;
-      m.op -= .022;
-      if (m.op <= 0) meteors.splice(i, 1);
+  /* ── Card 4: falling golden leaves ── */
+  if (index === 4) {
+    const { cv, ctx } = setupCanvas('canvas4');
+    const leaves = Array.from({ length: 30 }, () => ({
+      x: rand(0, cv.width), y: rand(-200, cv.height),
+      size: rand(5, 14), rot: rand(0, Math.PI * 2),
+      rotV: rand(-0.03, 0.03), vy: rand(0.6, 1.8),
+      vx: rand(-0.5, 0.5), op: rand(0.3, 0.7),
+      swing: rand(0.01, 0.04), swingT: rand(0, Math.PI * 2),
+    }));
+    function resetLeaf(l) {
+      l.x = rand(0, cv.width); l.y = -20;
+      l.size = rand(5, 14); l.op = rand(0.3, 0.7);
     }
-    requestAnimationFrame(draw);
-  })();
+    (function draw() {
+      ctx.clearRect(0, 0, cv.width, cv.height);
+      leaves.forEach(l => {
+        l.swingT += l.swing;
+        l.x += l.vx + Math.sin(l.swingT) * 0.8;
+        l.y += l.vy; l.rot += l.rotV;
+        ctx.save(); ctx.translate(l.x, l.y); ctx.rotate(l.rot);
+        ctx.beginPath();
+        ctx.ellipse(0, 0, l.size * 0.4, l.size, 0, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(245,194,0,${l.op})`; ctx.fill();
+        ctx.restore();
+        if (l.y > cv.height + 20) resetLeaf(l);
+      });
+      requestAnimationFrame(draw);
+    })();
+  }
+
+  /* ── Card 5: meteors + star field ── */
+  if (index === 5) {
+    const { cv, ctx } = setupCanvas('canvas5');
+    const stars = Array.from({ length: 160 }, () => ({
+      x: rand(0, cv.width), y: rand(0, cv.height),
+      r: rand(.3, 2.2), op: rand(.1, 1), spd: rand(.03, .15),
+    }));
+    const meteors = [];
+    setInterval(() => {
+      meteors.push({
+        x: rand(0, cv.width), y: rand(0, cv.height * .3),
+        len: rand(80, 160), speed: rand(7, 14),
+        angle: Math.PI / 4 + rand(-.3, .3),
+        op: 1, w: rand(.8, 2.5),
+      });
+    }, 750);
+    (function draw() {
+      ctx.clearRect(0, 0, cv.width, cv.height);
+      stars.forEach(s => {
+        s.op = Math.max(.05, Math.min(1, s.op + s.spd * (Math.random() > .5 ? 1 : -1)));
+        ctx.beginPath(); ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(255,255,255,${s.op})`; ctx.fill();
+      });
+      for (let i = meteors.length - 1; i >= 0; i--) {
+        const m = meteors[i];
+        const x2 = m.x - Math.cos(m.angle) * m.len;
+        const y2 = m.y - Math.sin(m.angle) * m.len;
+        const g = ctx.createLinearGradient(m.x, m.y, x2, y2);
+        g.addColorStop(0,   `rgba(245,194,0,${m.op})`);
+        g.addColorStop(.35, `rgba(255,220,80,${m.op*.5})`);
+        g.addColorStop(1,   'rgba(245,194,0,0)');
+        ctx.beginPath(); ctx.moveTo(m.x, m.y); ctx.lineTo(x2, y2);
+        ctx.strokeStyle = g; ctx.lineWidth = m.w; ctx.stroke();
+        m.x += Math.cos(m.angle) * m.speed;
+        m.y += Math.sin(m.angle) * m.speed;
+        m.op -= .022;
+        if (m.op <= 0) meteors.splice(i, 1);
+      }
+      requestAnimationFrame(draw);
+    })();
+  }
 }
 </script>
 </body>
